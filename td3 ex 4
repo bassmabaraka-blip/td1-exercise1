@@ -1,0 +1,50 @@
+LISTE * FusionDe2ListesAlternance(LISTE *L1, LISTE * L2)
+{
+
+7.5. EXERCICE 5 (DESTRUCTION D’UNE LISTE): CHAPITRE 7. CORRECTION TD3:
+
+22
+LISTE * ptr1 = L1, *ptr2 = L2, *res = NULL;
+if (L1 == NULL) return L2;
+else if (L2 == NULL) return L1;
+while(ptr1 && ptr2)
+{
+InsererElementEnFin(&res,ptr1->val);
+InsererElementEnFin(&res, ptr2->val);
+ptr1 = ptr1->suivant;
+ptr2 = ptr2->suivant;
+}
+while (ptr1)
+{
+InsererElementEnFin(&res, ptr1->val);
+ptr1 = ptr1->suivant;
+}
+while (ptr2)
+{
+InsererElementEnFin(&res, ptr2->val);
+ptr2 = ptr2->suivant;
+}
+return res;
+}
+Solution 2 :
+LISTE * Fusion(LISTE *L1, LISTE * L2)
+{
+LISTE *p1 = L1, *p2 = L2, *p3, *p4;
+if (!L1) return L2;
+if (!L2) return L1;
+LISTE * L = L1;
+while (p1->suivant && p2->suivant)
+{
+p3 = p1->suivant;
+p1->suivant = p2;
+p4 = p2->suivant;
+p2->suivant = p3;
+p1 = p3;
+p2 = p4;
+}
+  
+if (p1->suivant == 0) p1->suivant = p2;
+if (p2->suivant == 0) p2->suivant = p3
+  Méthode	Principe	Complexité
+1	Nouvelle liste	O(n+m)
+2	Modifier pointeurs	O(n+m)
