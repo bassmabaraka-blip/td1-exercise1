@@ -1,0 +1,111 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct stack {
+int data;
+struct stack *next;
+} STACK;
+/* Empiler */
+void push(STACK **head, int value){
+/* create a new node */
+STACK *node = NULL;
+node = (STACK*)malloc(sizeof(STACK));
+if (node == NULL)
+{
+fputs("Error: no space available for node\n", stderr);
+abort();
+} else {
+/* initialisation */
+node->data = value;
+/* insertion*/
+if (*head==NULL)
+node->next = NULL;
+else node->next = *head;
+*head = node;
+}
+}
+/* Depiler */
+int pop(STACK **head)
+{
+int value;
+if (*head==NULL) {/* pile est vide */
+fputs("Error: stack underflow\n", stderr);
+
+7.6. EXERCICE 6 (PILES): CHAPITRE 7. CORRECTION TD3:
+
+24
+
+abort();
+} else {/* depiler un element */
+STACK *top = *head;
+value = top->data;
+*head = top->next;
+free(top);
+return value;
+}
+}
+
+STACK * PairImpair(STACK * P1)
+{
+STACK * P2 = NULL, *P3 = NULL;
+int val;
+while (P1)
+{
+val = pop(&P1);
+if (val % 2 == 0) push(&P2,val);
+else push(&P3, val);
+}
+while (P3)
+{
+val = pop(&P3);
+push(&P2,val);
+}
+return P2;
+}
+void AffichePile(STACK *P)
+{
+while (P)
+{
+printf("%d\t",P->data);
+P = P->next;
+}
+printf("\n");
+}
+main()
+{
+int i;
+STACK * P1 = NULL, *P2 = NULL;
+for (i=1; i< 10; i++) push(&P1,i);
+AffichePile(P1);
+P2 = PairImpair(P1);
+AffichePile(P2);
+}
+Ajoute un élément en haut de la pile
+
+Crée un nœud
+Le met en tête
+ O(1)
+ . pop  Supprime l’élément en haut
+
+Récupère la valeur
+Libère la mémoire
+ O(1)
+ 3. PairImpair
+ Idée :
+Parcourt la pile P1
+Sépare :
+pairs → P2
+impairs → P3
+Puis ajoute les impairs à la fin de P2
+
+ Résultat :
+
+Pairs en haut, Impairs en bas
+ 4. AffichePile
+
+ Affiche tous les éléments
+ O(n)
+
+ 5. Complexité globale
+On parcourt tous les éléments une fois
+ O(n)
