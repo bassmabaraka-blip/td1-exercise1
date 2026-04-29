@@ -1,0 +1,67 @@
+1. int puissance(a,i)
+int puissance(int a,int i)
+{
+if(i==0)
+return 1;
+else
+return (a*puissance(a,i-1));
+}
+2. Complexit ́e de int puissance(a,i). On peut se contenter de la calculer en nombre de
+multiplications
+
+6.4. EXERCICE 4 CORRECTION TD2 :
+
+18
+
+T(0) = 0;
+T(1) = 1 + T(0) = 1 ;
+T(n) = 1+T(n-1) = 1 + 1 + T(n-2) = n+T(n-n) = n+T(0) = n ;
+T(n) = O(n)
+3. m ́ethode rapide
+int expRapide(int a, int i)
+{
+if (i==0)
+return 1;
+else if (i%2 == 0)
+return expRapide(expRapide(a,i/2),2);
+else return a*expRapide(expRapide(a,i/2),2);
+}
+4. complexit ́e (en nombre de mutilpications) : On  ́evalue la complexit ́e pour les valeurs de n
+qui sont des puissances de 2 n = 2k.
+Pour n=2, P (puissance) = a *a, 1 multiplication (1=ln(2))
+Pour n=4, P= (a ∗ a)
+
+2, 2 multiplications (2=ln(4))
+
+Pour n=8, P = ((a ∗ a)
+
+2), 3 multiplications (3=ln(8))
+
+pour n = 2k, k multiplications (k=ln(n))
+On peut d ́eduire que la complexit ́e est O(ln(n))
+5. somme
+int somme(int a, int n)
+{
+if(n==0)
+return 1;
+else
+return (puissance(a,n)+somme(a,n-1));
+}
+6. complexit ́e :
+T(s(a,n)) = T(p(a,n))+T(somme(a,n-1)) + 1 (1 addition)
+= T(p(a,n))+T(p(a,n-1))+T(somme(a,n-2)) + 1 +1 (2 additions)
+= T(p(a,n))+T(p(a,n-1))+T(p(a,n-2))+T(p(a,n-3))+...+T(p(a,1))+ T(s(a,n-n)) + 1+1+1
+.....+1 (n additions)
+= n + (n-1) +.....+1 + n = n(n+1)/2 + n
+est en O(n2)
+1. puissance(a,n)
+Chaque appel → 1 multiplication
+Nombre d’appels = n
+Complexité : O(n)
+🔹2. expRapide(a,n)
+On divise n par 2 à chaque fois
+ nombre d’étapes ≈ log(n)👉 Complexité : O(log n) (plus rapide)
+ 3. somme(a,n)
+À chaque étape → on calcule puissance(a,n) (coût O(n))
+Répété n fois
+ Complexité : O(n²)
