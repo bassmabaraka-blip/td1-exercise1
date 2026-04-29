@@ -1,0 +1,66 @@
+int rec1(int n)
+{
+if(n == 0)
+return 1;
+else
+return 2*rec1(n-1);
+}
+
+int rec2(int n)
+{
+if(n == 0)
+return 1;
+else
+return (rec2(n-1) + rec2(n-1));
+}
+
+6.4. EXERCICE 4 CORRECTION TD2 :
+
+19
+6.4.1 Le rˆole de la fonction rec1(n)
+rec1(0)=1 = 20
+rec1(1) = 2*rec1(0) = 2 = 21
+rec1(2) = 2*rec1(1) = 2*2 = 4 = = 22
+rec1(3) = 2*rec1(2) = 2*4 = 8 = 23
+.
+rec1(n) = 2n
+Elle calcule 2n
+
+6.4.2 Le rˆole de la fonction rec2(n)
+rec2(0) = 1 = 20
+rec2(1) = rec2(0) + rec2(0) = 1 + 1 = 2 = 21
+rec2(2) = rec2(1) + rec2(1)= 2 + 2 = 22
+rec2(3) = rec2(2) + rec2(2) = 4 + 4 = 23
+.
+rec2(n) = 2n
+Elle calcule 2n
+
+6.4.3 Complexit ́e de rec1(n)
+T1(0) = 0 ; T1(1)=1+T1(0) = 1 ;
+T1(n)=1+T1(n-1)=1+1+T1(n-2)=n
+La complexit ́e est O(n)
+6.4.4 Complexit ́e de rec2(n)
+T2(0) = 0 ; T2(1)=1+2*T2(0)=1 ;
+T2(2) = 1+2*T2(1) = 1 +2
+T2(3)= 1+ 2 T2(2) = 1 + 2 + 22
+T2(n) = 1+ 2 + 22+.....+2n−1
+La somme des n premiers termes d’une suite g ́em ́etrique de raison 2 : T2(n) = (1− 2n)/(1 − 2) =
+2n − 1
+La complexit ́e est O(2n)
+rec1(n)
+return 2 * rec1(n-1);
+Chaque appel fait 1 seul appel récursif
+Donc nombre d’appels = n
+ Complexité : O(n)
+ Résultat : 2
+n
+ 2. rec2(n)
+return rec2(n-1) + rec2(n-1);
+Chaque appel fait 2 appels récursifs
+Donc le nombre d’appels double à chaque fois
+
+ 1 + 2 + 4 + 8 + ...
+ Complexité : O(2ⁿ) (très lente)
+
+ Résultat aussi : 2
+n
