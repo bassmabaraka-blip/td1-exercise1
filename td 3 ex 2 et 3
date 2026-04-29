@@ -1,0 +1,73 @@
+int RechercherValeur(LISTE *L, int valeur)
+{
+LISTE *ptr = L;
+while (ptr){
+if (ptr->val == valeur) return 1;
+ptr = ptr->suivant;
+}
+
+20
+
+7.3. EXERCICE 3 (SUPPRESSION D’UN E ́LE ́MENT): CHAPITRE 7. CORRECTION TD3:
+
+21
+
+return 0;
+}
+Complexit ́e : O(n)
+
+7.3 Exercice 3 (Suppression d’un  ́e l ́e m ent) :
+int SuppressionValeurMin(LISTE **L)
+{
+LISTE * ptr = *L, *pMin=NULL, *pPrec = NULL;
+int minim;
+if (!ptr) /* liste vide */
+return 0;
+else if (!ptr->suivant) /* taille de liste = 1*/
+{
+*L = NULL;
+free(ptr);
+return 1;
+}
+minim = ptr->val; pMin = NULL;
+while (ptr->suivant)/*chercher le min et sa position ds la liste*/
+{
+if (minim > ptr->suivant->val){
+minim = ptr->suivant->val;
+pMin = ptr;
+}
+ptr = ptr->suivant;
+}
+if (!pMin){
+ptr = *L;
+*L = (*L)->suivant;
+free(ptr);
+return 1;
+} else{
+ptr = pMin->suivant;
+pMin->suivant = pMin->suivant->suivant;
+free(ptr);
+return 1;
+}
+}
+arcourt la liste élément par élément
+Compare chaque valeur avec valeur
+
+ Si trouvée → retourne 1
+ Sinon → retourne 0
+
+ Parcours de toute la liste
+ Complexité : O(n)
+
+ 2. SuppressionValeurMin
+ Rôle :
+Chercher le plus petit élément
+Puis le supprimer
+ Étapes :
+Vérifier si la liste est vide ou 1 élément
+Parcourir la liste pour trouver le minimum
+Supprimer cet élément (début ou milieu)
+ Complexité :
+On parcourt toute la liste pour trouver le min
+ O(n)
+Suppression → rapide (O(1))
