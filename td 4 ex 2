@@ -1,0 +1,33 @@
+int EstCeQueABR(SEARCH_TREE A)
+{
+LISTE * L = NULL;
+ConstListeTriee(A, &L);
+if (A == NULL) return 0;
+else if ((A->left == NULL)&& (A->right == NULL)) return 1;
+else {
+while (L->suivant != NULL)
+{
+if (L->val > L->suivant->val) return -1;
+L = L->suivant;
+}
+}
+return 1;
+}
+element_type LePlusPetit(SEARCH_TREE A)
+{
+while (A->left != NULL)
+A = A->left;
+return A->element;
+}
+Transformer l’arbre en liste triée (ConstListeTriee)
+Parcourir la liste
+Vérifier si elle est croissante
+
+etourne 1 → ABR valide
+retourne -1 → pas ABR
+construction liste : O(n)
+vérification : O(n
+
+                 Fonction	Rôle	Complexité
+EstCeQueABR	vérifier tri	O(n)
+LePlusPetit	trouver min	O(log n)
