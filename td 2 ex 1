@@ -1,0 +1,28 @@
+#include<stdio.h>
+#define N 4
+int min(int tab[N])
+{
+int i;
+// 1 premire affectation de index
+int index = 0;
+// n comparaisons + n-1 affectations
+for(i=1; i<N; i++)
+{
+// n-1 comparaisons
+// dans le pire des cas, n-1 affectations
+if(tab[i] < tab[index])
+index = i;
+}
+return index;
+}
+main()
+{
+int tt[] ={7,4,2,4,2,9};
+printf("index du min est = %d\n", min(tt));
+}
+— Complexit ́e : T(n) = 1+n+(n-1)+2*(n-1) = 4n-2 ;
+— Ordre : O(n);
+La fonction cherche le minimum ✔️
+Elle parcourt tout le tableau ✔️
+Elle fait un nombre d’opérations proportionnel à n ✔️
+👉 Donc complexité linéaire O(n)
