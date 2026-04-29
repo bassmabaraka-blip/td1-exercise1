@@ -1,0 +1,225 @@
+typedef struct {
+int abs;
+int ord;
+} Point;
+2. Point SaisirPoint()
+{
+Point p;
+printf("Donner les coordonnees du point :");
+scanf("%d%d",&p.abd,&p.ord);
+return p;
+}
+3. void AffichePoint(Point p)
+{
+printf("(%d,%d)\n",p.abs,p.ord);
+}
+4.
+#define tmax 20
+
+// Tableau statique
+Point T[tmax];
+int taille, i;
+// contrainte sur la taille du tab statique
+printf("Donner un entier <= %d :",tmax);
+scanf("%d",&taille);
+
+// Tableau dynamique
+Point *T = NULL;
+// Pas de contrainte sur la taille du tableau dynamique
+printf("Donner un entier :");
+scanf("%d",&taille);
+T = (Point*)malloc(taille * sizeof(Point));
+
+5.1. EXERCICE-1 CORRECTION TD1:
+
+13
+
+// Dans les 2 situations (statique ou dynamique)
+// remplissage du tableau par des points
+for(i=0; i < taille ; i++)
+{
+printf("Donner les coordonnees du point:");
+scanf("%d%d", &T[i].abs, &T[i].ord);
+}
+5. Ecrire une fonction qui recoit en argument un point (une structure du type point) et qui
+renvoie en r ́esultat la distance du point par rapport `a l’origine.
+(a) En transmettant en argument la valeur de la structure concern ́ee.
+float distance(Point p)
+{
+return sqrt(p.abs * p.abs + p.ord * p.ord);
+}
+(b) En transmettant en argument l’adresse de la structure concern ́ee.
+float distance(Point* p)
+{
+return sqrt(p->abs * p->abs + p->ord * p->ord);
+}
+6. Donner une fonction qui trie un tableau de points par ordre croissant des distances de ses
+points ( ́el ́ements) par rapport `a l’origine.
+void tritab(Point t[], int taille)
+{
+int i,j;
+Point aux;
+for(i=0; i<taille-1 ; i++)
+for(j = i+1; j<taille ; j++)
+if (DistTransVal(t[i]) > DistTransVal(t[j]))
+{
+aux = t[i];
+t[i] = t[j];
+t[j] = aux;
+}
+
+}
+7. Ecrire un programme d’essai des diff ́erentes fonctions r ́ealis ́ees.
+int main(){
+Point a;
+int i, taille;
+a = SaisirPoint();
+AfficherPoint(a);
+/* Tab Statique et Dynamique*/
+Point TStat[TMAX], *TDyn = NULL;
+/* Lecture de la taille des tableaux */
+printf("Donner la taille (<TMAX) du tableau:");
+scanf("%d",&taille);
+
+5.2. EXERCICE-2 CORRECTION TD1:
+
+14
+/* Allocation memoire pour TDyn */
+TDyn = (Point*) malloc(taille * sizeof(Point));
+/* Remplissage du TStat avec des valeurs aleatoire entre et 100 */
+srand(time(NULL)); /* initiliasation du generateur des aleatoires */
+for(i=0; i<taille; i++)
+{
+TStat[i].x = rand() % 100; TStat[i].y = rand() % 100;
+}
+/* Remplissage du TStat avec des valeurs aleatoire entre et 100 */
+for(i=0; i<taille; i++)
+{
+TDyn[i].x = rand() % 100; TDyn[i].y = rand() % 100;
+}
+/* Affichage du TStat */
+for(i=0; i<taille; i++) AfficherPoint(TStat[i]);
+/* Affichage du TDy */
+for(i=0; i<taille; i++) AfficherPoint(TDyn[i]);
+/* tri */
+tritab(TDyn, taille);
+for(i=0; i<taille; i++) AfficherPoint(TDyn[i]);
+return 0;
+}
+
+5.2 Exercice-2
+D ́efinir une structure de donn ́ees Heure permettant de repr ́esenter une heure au format
+hh/mm/ss, puis  ́ecrire les fonctions suivantes :
+typedef struct
+{
+int hh;
+int mm;
+int ss;
+} Heure;
+1. conversion d’un  ́e l ́ement de type Heure en nombre de secondes (entier)
+int HeureEnSecondes(Heure h)
+{
+return (h.hh*3600 + h.mm*60 + h.ss);
+}
+2. conversion d’un nombre de secondes (entier) en un  ́e l ́ement de type Heure
+Heure SecondesEnHeure(int sec)
+{
+
+
+5.2. EXERCICE-2 CORRECTION TD1:
+
+15
+
+Heure h;
+h.hh = sec/3600;
+sec = sec%3600;
+h.mm = sec/60;
+sec = sec%60;
+h.ss = sec;
+return h;
+}
+3. addition de deux  ́el ́ements de type Heure
+Heure AddHeures(Heure h1, Heure h2)
+{
+Heure h3;
+return (SecondesEnHeure(HeureEnSecondes(h1)+HeureEnSecondes(h2)));
+}
+Explication simple du code C — Structures et Tableaux
+1. typedef struct — Créer un nouveau type
+ctypedef struct {
+    int abs;   // coordonnée x
+    int ord;   // coordonnée y
+} Point;
+Ce que ça fait : On crée un nouveau type appelé Point qui regroupe deux entiers (x et y). Au lieu de gérer deux variables séparées, on a un seul "paquet" qui représente un point.
+
+2. SaisirPoint() — Lire un point au clavier
+cPoint SaisirPoint() {
+    Point p;
+    scanf("%d%d", &p.abs, &p.ord);  // ⚠️ bug : "abd" au lieu de "abs"
+    return p;
+}
+Ce que ça fait : Crée un point p, demande à l'utilisateur de taper les coordonnées, puis retourne ce point. ⚠️ Il y a un bug dans le code original : p.abd devrait être p.abs.
+
+3. AffichePoint() — Afficher un point
+cvoid AffichePoint(Point p) {
+    printf("(%d,%d)\n", p.abs, p.ord);
+}
+Ce que ça fait : Reçoit un point et l'affiche sous la forme (x,y). Elle ne retourne rien (void).
+
+4. Tableau statique vs dynamique
+StatiqueDynamiqueDéclarationPoint T[20]Point *T = NULLTailleFixée à la compilationChoisie à l'exécutionMémoireAutomatiquemalloc()
+c// Statique : taille max fixée à 20
+Point T[tmax];
+
+// Dynamique : taille choisie par l'utilisateur
+T = (Point*) malloc(taille * sizeof(Point));
+malloc réserve un bloc mémoire de taille × taille d'un Point octets.
+
+5. Distance à l'origine — 2 façons
+a) Par valeur (copie du point)
+cfloat distance(Point p) {
+    return sqrt(p.abs * p.abs + p.ord * p.ord);
+}
+On reçoit une copie du point. Simple mais utilise plus de mémoire.
+b) Par adresse (pointeur)
+cfloat distance(Point* p) {
+    return sqrt(p->abs * p->abs + p->ord * p->ord);
+}
+On reçoit l'adresse du point. On utilise -> au lieu de . pour accéder aux champs via un pointeur.
+
+💡 Règle : p.abs quand p est une variable — p->abs quand p est un pointeur.
+
+
+6. Tri du tableau par distance
+cvoid tritab(Point t[], int taille) {
+    int i, j;
+    Point aux;
+    for(i = 0; i < taille-1; i++)
+        for(j = i+1; j < taille; j++)
+            if (distance(t[i]) > distance(t[j])) {
+                aux  = t[i];   // échange
+                t[i] = t[j];
+                t[j] = aux;
+            }
+}
+Algorithme de tri par sélection : on compare chaque point avec tous ceux qui suivent, et on échange si nécessaire. À la fin, les points les plus proches de l'origine sont en premier.
+
+7. Structure Heure — hh/mm/ss
+ctypedef struct {
+    int hh, mm, ss;
+} Heure;
+Heure → Secondes
+cint HeureEnSecondes(Heure h) {
+    return (h.hh * 3600 + h.mm * 60 + h.ss);
+}
+Ex : 01:02:03 → 1×3600 + 2×60 + 3 = 3723 secondes
+Secondes → Heure
+cHeure SecondesEnHeure(int sec) {
+    Heure h;
+    h.hh = sec / 3600;     // partie heures
+    sec  = sec % 3600;     // reste
+    h.mm = sec / 60;       // partie minutes
+    sec  = sec % 60;       // reste
+    h.ss = sec;            // secondes
+    return h;
+}
