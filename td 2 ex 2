@@ -1,0 +1,54 @@
+#define m 3
+#define n 3
+int MiniMax(int tab[n][m])
+{
+int i;
+
+6.3. EXERCICE 3 CORRECTION TD2 :
+
+17
+
+int j;
+int max;
+int minimax;
+// (n) comparaisons
+// n -1 affectations
+for(i=0; i<n; i++)
+{
+// n initialisations du max. pour chaque nouvelle ligne
+max = tab[i][0];
+// (n)*m comparaisons
+// (n)(m-1) affectations
+for(j=1; j<m; j++)
+{
+// (n)(m-1) comparaisons
+// (n)(m-1) affectations
+if(tab[i][j] > max)
+max = tab[i][j];
+}
+// n comparaisons
+// 1 affectation
+if(i==0)
+minimax = max;
+// n comparaisons
+// (n-1) comparaisons
+else if(minimax > max)
+minimax = max;
+}
+return minimax;
+}
+main(){
+int t[3][3] = {{2,3,4},
+{5,6,7},
+{8,9,10}};
+printf("MiniMax = %d\n", MiniMax(t));
+}
+— Compexit ́e : T(m,n)=4*m*n+3*n-2 ;
+— Ordre
+On parcourt toute la matrice ✔️
+On calcule le max de chaque ligne ✔️
+Puis le min de ces max ✔️
+
+ Complexité :
+
+O(n × m)
