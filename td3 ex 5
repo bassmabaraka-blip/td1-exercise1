@@ -1,0 +1,37 @@
+void DestructionListe(LISTE **L)
+
+7.6. EXERCICE 6 (PILES): CHAPITRE 7. CORRECTION TD3:
+
+23
+
+{
+LISTE *ptr;
+if (*L == NULL) exit(0);
+while (*L != NULL){
+ptr = *L;
+*L = (*L)->suivant;
+free(ptr);
+}
+}
+Rôle de DestructionListe
+
+ Cette fonction supprime toute la liste chaînée
+(en libérant la mémoire)
+
+ Comment ça marche ?
+
+Boucle :
+
+while (*L != NULL)
+
+À chaque étape :
+
+Sauvegarder le premier élément (ptr = *L)
+Avancer la tête (*L = (*L)->suivant)
+Libérer (free(ptr))
+
+ On supprime un élément à la fois
+
+ Complexité
+On parcourt toute la liste
+ O(n)
