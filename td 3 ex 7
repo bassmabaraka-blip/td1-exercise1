@@ -1,0 +1,140 @@
+/* structure de la pile */
+typedef struct stack {
+char data;
+struct stack *next;
+} STACK;
+
+/* Empiler un caractere */
+void push(STACK **head, char value){
+/* create a new node */
+STACK *node = NULL;
+node = (STACK*)malloc(sizeof(STACK));
+if (node == NULL)
+{
+fputs("Error: no space available for node\n", stderr);
+abort();
+} else {
+/* initialisation */
+node->data = value;
+/* insertion*/
+if (*head==NULL)
+node->next = NULL;
+else node->next = *head;
+*head = node;
+}
+}
+/* Depiler un caractere */
+int pop(STACK **head)
+{
+char value;
+if (*head==NULL) {/* pile est vide */
+fputs("Error: stack underflow\n", stderr);
+abort();
+} else {/* depiler un element */
+STACK *top = *head;
+value = top->data;
+*head = top->next;
+free(top);
+return value;
+}
+}
+
+7.7. EXERCICE 7 (FILES): CHAPITRE 7. CORRECTION TD3:
+
+26
+/* structure d’un element (noeud) de la file */
+struct queue_node
+{
+struct queue_node *next;
+char data;
+};
+/* structure de la file */
+struct queue
+{
+struct queue_node *first;
+struct queue_node *last;
+};
+
+/* Enfiler (rajouter) un element */
+int enqueue(struct queue *q, const char value)
+{
+struct queue_node * node = NULL;
+node = (struct queue_node *)malloc(sizeof(struct queue_node));
+if (node == NULL) {
+printf("probleme dallocation memoire");
+return 1;
+}
+node->data = value;
+if (q->first == NULL) {
+q->first = q->last = node;
+} else {
+q->last->next = node;
+q->last = node;
+}
+node->next = NULL;
+return 0;
+}
+/* defiler (supprimer) un elment */
+int dequeue(struct queue *q, char *value)
+{
+if (!q->first) {/* test si la file vide */
+*value = 0;
+return 1;
+}
+/* recuperer la valeur du noeud supprimer */
+*value = q->first->data;
+/* recuperer ladresse du noeud supprimer */
+struct queue_node *tmp = q->first;
+if (q->first == q->last) {
+q->first = q->last = NULL;
+
+7.7. EXERCICE 7 (FILES): CHAPITRE 7. CORRECTION TD3:
+
+27
+
+} else {
+q->first = q->first->next;
+}
+free(tmp); /* liberation de lesapce occupe par le noeud suprime*/
+return 0;
+}
+/* la fonctin EcrireMessage */
+struct queue * EcrireMessage(char chaine[])
+{
+int i,taille = strlen(chaine);
+struct queue * q=NULL;
+q = (struct queue *)malloc(sizeof(struct queue));
+if (!q) { printf("Prob allocation mem "); exit(0);}
+q->first = q->last = NULL;
+for(i=0;i<taille;i++)
+enqueue(q, chaine[i]);
+return q;
+}
+/* Palindrome ? */
+int EstPalindrome(char chaine[])
+{
+int t1 = strlen(chaine) % 2;
+int t2 = strlen(chaine)/2;
+int i;
+char val, c1, c2;
+STACK *p = NULL;
+struct queue * Q;
+Q = EcrireMessage(chaine);
+for(i=0;i<t2; i++)
+{
+dequeue(Q,&val);
+push(&p, val);
+}
+if (t1 != 0) dequeue(Q,&val);
+for(i=0;i<t2;i++)
+{
+dequeue(Q,&c1);
+c2 = pop(&p);
+if (c1 != c2) return 0;
+}
+return 1;
+}
+Pile → LIFO
+File → FIFO
+Palindrome → comparaison pile + file
+ Complexité : O(n)
